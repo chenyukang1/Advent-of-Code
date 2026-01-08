@@ -1,5 +1,6 @@
-def fresh_ingredient_ids(part1: bool) -> int:
-    ans = 0
+def fresh_ingredient_ids() -> tuple[int, int]:
+    p1 = 0
+    p2 = 0
     ranges = []
     ids = []
     with open('2025/day5/input.txt', 'r') as f:
@@ -15,19 +16,18 @@ def fresh_ingredient_ids(part1: bool) -> int:
 
     ranges = merge_ranges(ranges)
 
-    if part1:
-        for id in ids:
-            for r in ranges:
-                s = r.split('-')
-                if int(id) >= int(s[0]) and int(id) <= int(s[1]):
-                    ans += 1
-                    break
-    else:
-       for r in ranges:
-           s = r.split('-')
-           ans += int(s[1]) - int(s[0]) + 1
+    for id in ids:
+        for r in ranges:
+            s = r.split('-')
+            if int(id) >= int(s[0]) and int(id) <= int(s[1]):
+                p1 += 1
+                break
 
-    return ans
+    for r in ranges:
+        s = r.split('-')
+        p2 += int(s[1]) - int(s[0]) + 1
+
+    return p1, p2
 
 
 # 合并有序数组
@@ -51,8 +51,9 @@ def merge_ranges(ranges: list) -> list:
 
 
 def main():
-    print(fresh_ingredient_ids(True)) # part1
-    print(fresh_ingredient_ids(False)) # part2
+    p1, p2 = fresh_ingredient_ids()
+    print(p1)
+    print(p2)
 
 if __name__ == "__main__":
     main()
