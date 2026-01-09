@@ -1,5 +1,8 @@
 
 
+import math
+
+
 def calculate() -> int:
     p2 = 0
     nums = []
@@ -57,9 +60,43 @@ def calculate() -> int:
 
     return p2
 
+def calcluate_v2() -> int:
+    p2 = 0
+    nums = []
+    with open('2025/day6/input.txt', 'r') as f:
+        lines = f.readlines()
+        for line in lines[:-1]:
+            nums.append([s for s in line.strip('\n')])
+        operations = [s for s in lines[-1].split()]
+
+    cols = len(nums[0])
+    rows = len(nums)
+    nums_in_cols = []
+    for col in range(cols - 1, -2, -1):
+        if all(nums[row][col] == ' ' for row in range(0, rows)) or col == -1:
+            operation = operations.pop()
+            print(nums_in_cols)
+            if operation == '+':
+                p2 += sum(nums_in_cols)
+            if operation == '*':
+                p2 += math.prod(nums_in_cols)
+            nums_in_cols = []
+
+        else:
+            m = 0
+            num = 0
+            for row in range(rows - 1, -1, -1):
+                if nums[row][col] != ' ':
+                    num += 10 ** m * int(nums[row][col])
+                    m += 1
+            nums_in_cols.append(num)
+
+    return p2
+
 
 def main():
-    print(calculate())
+    # print(calculate())
+    print(calcluate_v2())
 
 if __name__ == "__main__":
     main()
