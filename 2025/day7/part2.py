@@ -1,5 +1,4 @@
 
-
 # 回溯，时间复杂度O(2^n)
 def time_lines() -> int:
     with open("2025/day7/input.txt", "r") as f:
